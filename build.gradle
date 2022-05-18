@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-//플러그인 의존성들을 적용할 지 결정
+//플러그인 의존성들을 적용할 지 결정,  자바와 스프링부트를 사용하기 위해서 항상 추가
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -28,7 +28,7 @@ repositories {
     mavenCentral()
 }
 
-//프로젝트 개발에 필요한 의존성들을 선언
+//프로젝트 개발에 필요한 의존성들을 선언, 여기에서 버전을 명시하지 않아야 위에 buildscript-dependencies에서 설정한 버전을 따라감
 //intellij는 메이븐 저장소의 데이터를 인덱싱하여 관리 > 커뮤니티 버전을 사용해도 의존성 자동 완성
 dependencies {
     //compile 명령어는 gradle 7.0부터 지원 X > implementation으로 변경
