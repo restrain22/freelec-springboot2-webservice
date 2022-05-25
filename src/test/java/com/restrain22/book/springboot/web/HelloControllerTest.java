@@ -1,4 +1,4 @@
-package com.restrain22.book.springboot;
+package com.restrain22.book.springboot.web;
 
 import com.restrain22.book.springboot.web.HelloController;
 import org.junit.Test;

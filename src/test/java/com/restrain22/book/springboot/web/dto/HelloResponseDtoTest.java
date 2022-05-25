@@ -1,7 +1,6 @@
-package com.restrain22.book.springboot.dto;
+package com.restrain22.book.springboot.web.dto;
 
 
-import com.restrain22.book.springboot.web.dto.HelloResponseDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 
