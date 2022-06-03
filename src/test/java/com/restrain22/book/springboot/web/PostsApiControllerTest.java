@@ -3,6 +3,8 @@ package com.restrain22.book.springboot.web;
 import com.restrain22.book.springboot.domain.posts.Posts;
 import com.restrain22.book.springboot.domain.posts.PostsRepository;
 import com.restrain22.book.springboot.web.dto.PostsSaveRequestDto;
+import com.restrain22.book.springboot.web.dto.PostsUpdateRequestDto;
+import org.assertj.core.util.Lists;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,9 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import java.util.List;
 
@@ -37,28 +43,69 @@ public class PostsApiControllerTest {
     }
 
     @Test
-    public void Posts_등록된다() throws Exception{
+    public void Posts_등록한다() throws Exception{
         //given
-        String title = "title";
-        String content = "content";
-        PostsSaveRequestDto requestDto = PostsSaveRequestDto
-                .builder()
+        String title="title";
+        String content="content";
+        String author = "author";
+        PostsSaveRequestDto requestDto=PostsSaveRequestDto.builder()
                 .title(title)
                 .content(content)
-                .author("author")
+                .author(author)
                 .build();
 
-        String url = "http://localhost:"+port+"/api/v1/posts";
+        String url="http://localhost:"+port+"/api/v1/posts";
 
         //when
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+        ResponseEntity<Long> responseEntity=restTemplate.postForEntity(url,requestDto,Long.class);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).
+                isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).
+                isGreaterThan(0L);
+        List<Posts> all = postsRepository.findAll();
+        assertThat(all.get(0).getTitle()).isEqualTo(title);
+        assertThat(all.get(0).getContent()).isEqualTo(content);
+
+    }
+
+    @Test
+    public void Posts_수정된다() throws Exception {
+        //given
+        Posts savedPosts = postsRepository.save(Posts
+                .builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+
+        Long updateID = savedPosts.getId();
+        String expectedTitle = "title2";
+        String expectedContent = "content2";
+
+        PostsUpdateRequestDto requestDto =
+                            PostsUpdateRequestDto
+                                    .builder()
+                                    .title(expectedTitle)
+                                    .content(expectedContent)
+                                    .build();
+
+        String url = "http://localhost:"+port+"/api/v1/posts/"+updateID;
+
+        HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
+
+        //when
+        ResponseEntity<Long> responseEntity = restTemplate
+                                .exchange(url, HttpMethod.PUT,requestEntity,Long.class);
+
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<Posts> all = postsRepository.findAll();
-        assertThat(all.get(0).getTitle()).isEqualTo(title);
-        assertThat(all.get(0).getContent()).isEqualTo(content);
-    }
+        assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
+        assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
 
+    }
 }
