@@ -1,5 +1,6 @@
 package com.restrain22.book.springboot.domain.posts;
 
+import com.restrain22.book.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor // 기본 생성자 자동 추가
 @Entity //테이블과 링크될 클래스를 나타냄, 클래스의 카멜케이스 이름을 언더스코터 네이밍(_)으로 테이블 이름을 매칭
         //실제 DB 테이블과 매칭될 클래스 = Entity 클래스
-public class Posts {
+public class Posts extends BaseTimeEntity {
     //Entity에서는 Setter 메소드를 절대 만들지 않음 > 어디서 변해야 하는지 구분할 수 없어, 복잡해지기 때문
     //생성자를 통해 값을 채워야 함. 값 변경이 필요한 경우, 해당 이벤트에 맞는 public 메소드 호출을 통해 수정
 

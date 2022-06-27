@@ -6,5 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //Entity 클래스와 Entity Repository는 함께 위치해야, Entity는 Repository 없이 제 역할 불가
 public interface PostsRepository extends JpaRepository<Posts,Long> {
 
-
 }
