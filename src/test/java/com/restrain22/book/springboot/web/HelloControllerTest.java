@@ -1,10 +1,13 @@
 package com.restrain22.book.springboot.web;
 
+import com.jayway.jsonpath.JsonPath;
 import com.restrain22.book.springboot.web.HelloController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 //Web(Spring MVC)에 집중할 수 있는 어노테이션, @controller만 사용가능
 @WebMvcTest(controllers = HelloController.class)
+@MockBean(JpaMetamodelMappingContext.class)
 public class HelloControllerTest {
 
     //스프링이 관리하는 빈을 주입 받음
@@ -40,6 +44,7 @@ public class HelloControllerTest {
     public void helloDto가_리턴된다() throws Exception{
         String name = "hello";
         int amount = 1000;
+
 
         mvc.perform(get("/hello/dto")
                 .param("name",name)

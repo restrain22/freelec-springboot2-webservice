@@ -22,7 +22,7 @@ public class Posts extends BaseTimeEntity {
     @Column(length = 500, nullable = false) // 테이블의 칼럼, 굳이 선언하지 않아도 해당 클래스의 필드는 모두 컬럼이다.
     private String title;                   // 사용하는 이유는, 기본값 외에 추가로 변경이 필요한 옵션이 있는 경우, 문자열의 경우 VARCHAR(255)가 기본값
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false) // columnDefinition : 특정 필드의 타입을 지정하여 데이터를 추출
     private String content;
 
     private String author;

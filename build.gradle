@@ -38,5 +38,5 @@ dependencies {
     implementation('com.h2database:h2')
     implementation('org.springframework.boot:spring-boot-starter-mustache')
     annotationProcessor 'org.projectlombok:lombok' //lombok만 implementation할 시 사용 안 되어 추가
-    testImplementation('org.springframework.boot:spring-boot-starter-test:')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
