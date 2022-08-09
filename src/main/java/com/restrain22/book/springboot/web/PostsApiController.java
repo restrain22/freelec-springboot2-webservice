@@ -33,5 +33,9 @@ public class PostsApiController {
         return id;
     }
 
-
+    @DeleteMapping("/api/v1/posts/all")
+    public Long deleteAll(){
+        postsService.deleteAll();
+        return postsService.count();
+    }
 }

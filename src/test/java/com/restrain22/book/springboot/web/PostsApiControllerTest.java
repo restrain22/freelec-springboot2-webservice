@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 
+import java.net.URI;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -109,6 +110,18 @@ public class PostsApiControllerTest {
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
+    }
+
+    @Test
+    public void 게시글_삭제() throws Exception {
+        Posts posts = Posts.builder()
+                .author("author")
+                .content("content")
+                .title("title")
+                .build();
+        postsRepository.delete(posts);
+        //then
+        assertThat(postsRepository.count()).isEqualTo(0L);
 
     }
 }

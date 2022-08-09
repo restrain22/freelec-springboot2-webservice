@@ -52,4 +52,24 @@ public class PostsService {
                 .orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. id="+id));
         postsRepository.delete(posts);
     }
+
+    @Transactional
+    public void deleteAll(){
+        //List<PostsListResponseDto> list = postsRepository.findAll().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
+        if(postsRepository.count()==0){
+            throw new ArithmeticException("삭제할 게시물이 없습니다");
+        }
+        postsRepository.deleteAllInBatch();
+
+//        if(!list.isEmpty())
+//            postsRepository.deleteAllInBatch();
+//        else {
+//            postsRepository.findById(list.get(0).getId()).orElseThrow(()-> new IllegalArgumentException("삭제할 게시글이 없습니다."));
+//        }
+    }
+
+    @Transactional
+    public Long count(){
+        return postsRepository.count();
+    }
 }
