@@ -114,12 +114,13 @@ public class PostsApiControllerTest {
 
     @Test
     public void 게시글_삭제() throws Exception {
-        Posts posts = Posts.builder()
-                .author("author")
-                .content("content")
-                .title("title")
-                .build();
-        postsRepository.delete(posts);
+//        Posts posts = Posts.builder()
+//                .author("author")
+//                .content("content")
+//                .title("title")
+//                .build();
+
+        postsRepository.deleteAll();
         //then
         assertThat(postsRepository.count()).isEqualTo(0L);
 
